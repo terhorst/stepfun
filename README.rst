@@ -1,4 +1,4 @@
-``stepfun`` is a Python class representing for representing mathematical
+``stepfun`` is a Python class for representing mathematical
 step functions. It supports simple arithemetic operations (addition,
 subtraction, multiplication, etc.) as well as vectorized evaluation and
 integration.
