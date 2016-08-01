@@ -5,3 +5,4 @@ build/
 dist/
 .cache
 *.pyc
+stepfun.egg-info
