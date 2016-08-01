@@ -1,5 +1,5 @@
 ``stepfun`` is a Python class for representing mathematical
-step functions. It supports simple arithemetic operations (addition,
+step functions. It supports simple arithmetic operations (addition,
 subtraction, multiplication, etc.) as well as vectorized evaluation and
 integration.
 
