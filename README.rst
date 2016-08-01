@@ -24,6 +24,10 @@ to set :math:`x_0 = -\infty` and/or :math:`x_K = \infty`, allowing
     >>> s1 = StepFunction(x=[-inf, +inf], y=[1.]) # constant function s1 = 1
     >>> s1
     StepFunction(x=array([-inf,  inf]), y=array([ 1.]))
+    >>> StepFunction(x=[-inf, +inf], y=[1., 2.])
+    Traceback (most recent call last):
+        ...
+    RuntimeError: len(x) != 1 + len(y)
 
 Mathematical operations
 -----------------------
