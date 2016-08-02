@@ -72,6 +72,8 @@ Unary options such as negation and powers are also supported.
     StepFunction(x=array([-inf,  inf]), y=array([ 4.]))
     >>> -s1
     StepFunction(x=array([-inf,  inf]), y=array([-1.]))
+    >>> abs(-s1)
+    StepFunction(x=array([-inf,  inf]), y=array([ 1.]))
 
 
 Breakpoint compatibility
