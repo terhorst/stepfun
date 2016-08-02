@@ -2,6 +2,7 @@ import pytest
 import numpy as np
 
 from stepfun import StepFunction
+from stepfun.stepfun import _same_support
 
 @pytest.fixture
 def s0():
@@ -35,11 +36,53 @@ def test_combine(s1, heaviside):
     s = StepFunction([-np.inf, -1, 0., 1., .2, np.inf], [-1., -1., 1., 1., 2.])
     assert s != heaviside
 
+def test_compatible(heaviside, onepfive):
+    assert not _same_support(heaviside, onepfive)
+    with pytest.raises(TypeError) as e:
+        heaviside <= onepfive
+    with pytest.raises(TypeError) as e:
+        heaviside >= onepfive
+
 def test_eq(s1, heaviside, onepfive):
     assert s1 == s1
     assert s1 != heaviside
     assert heaviside == heaviside
     assert heaviside != onepfive
+
+def test_ge(s1, heaviside, onepfive):
+    for f in (s1, heaviside, onepfive):
+        assert f >= f
+    assert s1 >= heaviside
+    with pytest.raises(TypeError) as e:
+        assert not heaviside >= onepfive
+    with pytest.raises(TypeError) as e:
+        assert not onepfive >= heaviside
+
+def test_le(s1, heaviside, onepfive):
+    for f in (s1, heaviside, onepfive):
+        assert f <= f
+    assert -s1 <= -heaviside
+    with pytest.raises(TypeError) as e:
+        assert not onepfive <= heaviside
+    with pytest.raises(TypeError) as e:
+        assert not heaviside <= onepfive
+
+def test_lt(s1, heaviside, onepfive):
+    for f in (s1, heaviside, onepfive):
+        assert not f < f
+    with pytest.raises(TypeError) as e:
+        onepfive < heaviside
+    with pytest.raises(TypeError) as e:
+        heaviside < onepfive
+
+def test_gt(s1, heaviside, onepfive):
+    for f in (s1, heaviside, onepfive):
+        assert not f > f
+    assert not s1 > heaviside
+    with pytest.raises(TypeError) as e:
+        onepfive > heaviside
+    with pytest.raises(TypeError) as e:
+        heaviside > onepfive
 
 def test_add(s1, heaviside):
     assert s1 + s1 == StepFunction([-np.inf, np.inf], [2.])
@@ -95,9 +138,16 @@ def test_integral(s1):
     s3 = StepFunction([-np.inf, -1, 1, np.inf], [0., 1., 0.])
     assert (s1 * s3).integral() == 2
 
-def test_str(s1):
-    assert str(s1) == """Step function\nx: [-inf  inf]\ny: [ 1.]"""
+def test_repr(s1):
+    assert repr(s1) == """StepFunction(x=array([-inf,  inf]), y=array([ 1.]))"""
+    array = np.array
+    inf = np.inf
+    assert eval(repr(s1)) == s1
 
 def test_abs(s1, heaviside):
     assert abs(heaviside) == s1
 
+def test_K(s1, heaviside, onepfive):
+    assert s1.K == 1
+    assert heaviside.K == 2
+    assert onepfive.K == 3

@@ -24,6 +24,8 @@ to set :math:`x_0 = -\infty` and/or :math:`x_K = \infty`, allowing
     >>> s1 = StepFunction(x=[-inf, +inf], y=[1.]) # constant function s1 = 1
     >>> s1
     StepFunction(x=array([-inf,  inf]), y=array([ 1.]))
+    >>> s1.K
+    1
     >>> StepFunction(x=[-inf, +inf], y=[1., 2.])
     Traceback (most recent call last):
         ...
@@ -46,8 +48,8 @@ subtraction, multiplication, etc.
     >>> s1 / s2
     StepFunction(x=array([-inf,  inf]), y=array([ 0.5]))
 
-Equality
-++++++++
+Comparison
+++++++++++
 Equality testing is supported, and requires that all elements of both
 :math:`\mathbf{x}` and :math:`\mathbf{y}` match exactly.
 
@@ -61,6 +63,43 @@ Equality testing is supported, and requires that all elements of both
     False
     >> s1 == StepFunction(x=[-inf, 0., inf], y=[1., 1.])
     True # see "Breakpoint compatibility", below
+
+Step functions have a natural partial ordering. Step function ``s1``
+is (strictly) greater than ``s2`` if ``s1 - s2`` is everywhere (strictly)
+positive.
+
+.. code:: python
+
+    >>> 2 * s1 > s1
+    True
+    >>> s1 > s1
+    False
+    >>> s1 >= s1
+    True
+
+Functions which have different domains of definition cannot be compared.
+
+.. code:: python
+    >>> one = StepFunction(x=[-1., 1.], y=[2.])
+    >>> one > s1
+    Traceback (most recent call last):
+        ...
+    TypeError: Step functions have different support: [-1.  1.] vs. [-inf  inf]
+
+Comparison against objects which are not of type ``StepFunction`` falls through
+to the underlying array of ``y`` values.
+
+.. code:: python
+    >>> s1 > 0
+    True
+    >>> two = StepFunction([-1, 0, 1], [2, 3])
+    >>> two < [3, 4]
+    True
+    >>> two < [2, 4]
+    False
+    >>> two <= [2, 4]
+    True
+
 
 Unary operations
 ++++++++++++++++
