@@ -88,6 +88,9 @@ class StepFunction:
             return np.array_equal(self._x, other._x) and np.array_equal(self._y, other._y)
         return False
 
+    def __abs__(self):
+        return StepFunction(self._x, abs(self._y))
+
 
     def __call__(self, s):
         return self._y[np.searchsorted(self._x, s, side="right") - 1]

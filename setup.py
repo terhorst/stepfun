@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
         name = "stepfun",
-        version = "0.0.1",
+        version = "0.0.2",
         author = "Jonathan Terhorst",
         author_email = "terhorst@gmail.com",
         description = "A class for representing step functions",

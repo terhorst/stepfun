@@ -98,3 +98,6 @@ def test_integral(s1):
 def test_str(s1):
     assert str(s1) == """Step function\nx: [-inf  inf]\ny: [ 1.]"""
 
+def test_abs(s1, heaviside):
+    assert abs(heaviside) == s1
+
