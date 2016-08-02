@@ -80,6 +80,7 @@ positive.
 Functions which have different domains of definition cannot be compared.
 
 .. code:: python
+
     >>> one = StepFunction(x=[-1., 1.], y=[2.])
     >>> one > s1
     Traceback (most recent call last):
@@ -90,6 +91,7 @@ Comparison against objects which are not of type ``StepFunction`` falls through
 to the underlying array of ``y`` values.
 
 .. code:: python
+
     >>> s1 > 0
     True
     >>> two = StepFunction([-1, 0, 1], [2, 3])
